@@ -1,18 +1,33 @@
 import { useState } from "react"
 
 function App() {
-  const [checkboxValue, setCheckboxValue] = useState({
-    chbx1:false,
-    chbx2:false
-    
-  });
+  const [listItems, setListItems] = useState([
+    {
+      id: "1",
+      name: "Tortillas",
+      quantity: 2,
+      unit: "Kg",
+      checked: false,
+    },
+    {
+      id: "2",
+      name: "Aceite",
+      quantity: 900,
+      unit: "ml",
+      checked: false,
+    },
+  ]);
 
   const handleCheckboxChanhe = (e) => {
-   setCheckboxValue({
-    ...checkboxValue,
-    [e.target.name]: !checkboxValue[e.target.name]
-   });
-    
+    const newList = listItems.map(item => {
+      if (item.id === e.target.name) {
+        item.checked = !item.checked;
+      }
+
+      return item;
+
+    })
+    setListItems(newList);
   }
 
   return (
@@ -34,16 +49,23 @@ function App() {
       <div className="col-1">
         <input 
           type="checkbox"
-          name="chbx1"
+          name={listItems[0].id}
           onChange={(e)=>handleCheckboxChanhe(e)}
-          checked={checkboxValue.chbx1} 
+          checked={listItems[0].checked} 
         />
       </div>
       <div className="col text-start">
-      {checkboxValue.chbx1 ? <s>1 Kg</s> : '1 Kg'}
+      {
+      listItems[0].checked ?
+      <s>{`${listItems[0].quantity} ${listItems[0].unit}`}</s> : 
+      `${listItems[0].quantity} ${listItems[0].unit}`
+      }
       </div>
-      <div className="col-5 col-md-7 text-start">
-        {checkboxValue.chbx1 ? <s>Tortillas</s> : 'Tortillas'} 
+      <div 
+      className="col-5 col-md-7 text-start" 
+      style={{textDecoration: listItems[0].checked && "line-through"}}
+      >
+      {`${listItems[0].name}`}
       </div>
       <div className="col-4 col-md-3 btn-group btn-group-sm text-end" role="group">
         <button className="btn btn-outline-primary">
@@ -61,16 +83,21 @@ function App() {
       <div className="col-1">
         <input 
         type="checkbox"
-        name="chbx2"
+        name={listItems[1].id}
         onChange={(e)=>handleCheckboxChanhe(e)}
-        checked={checkboxValue.chbx2}  
+        checked={listItems[1].checked}  
         />
       </div>
       <div className="col text-start">
-      {checkboxValue.chbx2 ? <s>1 lt</s> : '1 lt'}
+      {listItems[1].checked ?
+      <s>{`${listItems[1].quantity} ${listItems[1].unit}`}</s> : 
+      `${listItems[1].quantity} ${listItems[1].unit}`
+    }
       </div>
-      <div className="col-5 col-md-7 text-start">
-      {checkboxValue.chbx2 ? <s>Aceite</s> : 'Aceite'}
+      <div className="col-5 col-md-7 text-start"
+       style={{textDecoration: listItems[1].checked && "line-through"}}
+      >
+        {`${listItems[1].name}`}
       </div>
       <div className="col-4 col-md-3 btn-group btn-group-sm text-end" role="group">
         <button className="btn btn-outline-primary">
