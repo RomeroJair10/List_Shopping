@@ -1,4 +1,7 @@
 import { useState } from "react"
+import ListItem from "./Components/ListItem";
+import NewListItemButton from "./Components/NewListltenButton"
+import Swal from "sweetalert2";
 
 function App() {
   const [listItems, setListItems] = useState([
@@ -16,9 +19,20 @@ function App() {
       unit: "ml",
       checked: false,
     },
+    {
+      id: "3",
+      name: "Maiz",
+      quantity: 10,
+      unit: "kg",
+      checked: false,
+    }
   ]);
 
-  const handleCheckboxChanhe = (e) => {
+  const handleNewListItemButton = () => {
+    Swal.fire('Any fool can USE a computer')
+  }
+
+  const handleCheckboxChange = (e) => {
     const newList = listItems.map(item => {
       if (item.id === e.target.name) {
         item.checked = !item.checked;
@@ -39,84 +53,26 @@ function App() {
        <br />
       </div>
       <div className="col-2 text-end">
-        <button type="button" className="btn btn-outline-success btn-sm mt-1">
-          <i class="bi bi-plus-circle-fill"></i>
-        </button>
+        <NewListItemButton handleButton={handleNewListItemButton} />
       </div>
     </div>
     <hr />
-    <div className="row">
-      <div className="col-1">
-        <input 
-          type="checkbox"
-          name={listItems[0].id}
-          onChange={(e)=>handleCheckboxChanhe(e)}
-          checked={listItems[0].checked} 
+    {
+      listItems.map((listItem) => (
+        <ListItem
+        id={listItem.id}
+        name={listItem.name}
+        quantity={listItem.quantity}
+        unit={listItem.unit}
+        checked={listItem.checked}
+        handleCheckboxChange={handleCheckboxChange}
         />
-      </div>
-      <div className="col text-start">
-      {
-      listItems[0].checked ?
-      <s>{`${listItems[0].quantity} ${listItems[0].unit}`}</s> : 
-      `${listItems[0].quantity} ${listItems[0].unit}`
-      }
-      </div>
-      <div 
-      className="col-5 col-md-7 text-start" 
-      style={{textDecoration: listItems[0].checked && "line-through"}}
-      >
-      {`${listItems[0].name}`}
-      </div>
-      <div className="col-4 col-md-3 btn-group btn-group-sm text-end" role="group">
-        <button className="btn btn-outline-primary">
-          <i className="bi bi-pencil-square"></i>
-          </button>
-        <button className="btn btn-outline-info">
-          <i className="bi bi-files"></i>
-          </button>
-        <button className="btn btn-outline-danger">
-          <i className="bi bi-trash2-fill"></i>
-          </button>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-1">
-        <input 
-        type="checkbox"
-        name={listItems[1].id}
-        onChange={(e)=>handleCheckboxChanhe(e)}
-        checked={listItems[1].checked}  
-        />
-      </div>
-      <div className="col text-start">
-      {listItems[1].checked ?
-      <s>{`${listItems[1].quantity} ${listItems[1].unit}`}</s> : 
-      `${listItems[1].quantity} ${listItems[1].unit}`
+      ) ) 
     }
-      </div>
-      <div className="col-5 col-md-7 text-start"
-       style={{textDecoration: listItems[1].checked && "line-through"}}
-      >
-        {`${listItems[1].name}`}
-      </div>
-      <div className="col-4 col-md-3 btn-group btn-group-sm text-end" role="group">
-        <button className="btn btn-outline-primary">
-          <i className="bi bi-pencil-square"></i>
-          </button>
-        <button className="btn btn-outline-info">
-          <i className="bi bi-files"></i>
-          </button>
-        <button className="btn btn-outline-danger">
-          <i className="bi bi-trash2-fill"></i>
-          </button>
-      </div>
-    </div>
     <hr />
     <div className="row">
       <div className="col text-end">
-      <button type="button" className="btn btn-outline-success btn-sm mt-1">
-          <i class="bi bi-plus-circle-fill"></i>
-        </button>
+      <NewListItemButton handleButton={handleNewListItemButton} />
       </div>
     </div>
   </div>
