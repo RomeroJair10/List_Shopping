@@ -25,11 +25,63 @@ function App() {
       quantity: 10,
       unit: "kg",
       checked: false,
+    },
+    {
+      id: "4",
+      name: "coca cola",
+      quantity: 5,
+      unit: "ml",
+      checked: false,
     }
   ]);
 
-  const handleNewListItemButton = () => {
-    Swal.fire('Any fool can USE a computer')
+  const handleNewListItemButton = async() => {
+    const {value} = await Swal.fire({
+      title: "New Item information",
+      html: `<input 
+              tipe='text' 
+              id='name' 
+              name='name' 
+              class='swal2-input' 
+              placeholder='Item' 
+             />
+             <input 
+             tipe='text' 
+             id='quantity' 
+             name='quantity' 
+             class='swal2-input' 
+             placeholder='Qt' 
+            />
+            <input 
+              tipe='text' 
+              id='unit' 
+              name='unit' 
+              class='swal2-input' 
+              placeholder='unit' 
+             />`,
+
+
+      confirmButtonText: "Add item",
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      cancelButtonText: "Dismiss",
+      preConfirm: () => {
+        const name= Swal.getPopup().querySelector('#name').value;
+        const quantity= Swal.getPopup().querySelector('#quantity').value;
+        const unit= Swal.getPopup().querySelector('#unit').value
+        if (!name || !quantity || !unit) {
+          Swal.showValidationMessage('Please enter an item name');
+        }
+        return{name, quantity, unit};
+      },
+    })
+
+    setListItems([
+      ...listItems,
+      {id: (listItems.length+1).toString(), ...value, checked:false}
+    ])
+
   }
 
   const handleCheckboxChange = (e) => {
