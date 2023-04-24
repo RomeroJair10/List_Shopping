@@ -2,6 +2,7 @@ import { useState } from "react"
 import ListItem from "./Components/ListItem";
 import NewListItemButton from "./Components/NewListltenButton"
 import Swal from "sweetalert2";
+import ClearListButton from "./Components/ClearListButton";
 
 function App() {
   const [listItems, setListItems] = useState([
@@ -77,6 +78,8 @@ function App() {
       },
     })
 
+    if(!value.name || !value.quantity || !value.unit) return
+
     setListItems([
       ...listItems,
       {id: (listItems.length+1).toString(), ...value, checked:false}
@@ -105,6 +108,7 @@ function App() {
        <br />
       </div>
       <div className="col-2 text-end">
+        <ClearListButton setListItems={setListItems}/>
         <NewListItemButton handleButton={handleNewListItemButton} />
       </div>
     </div>
@@ -124,6 +128,7 @@ function App() {
     <hr />
     <div className="row">
       <div className="col text-end">
+        <ClearListButton setListItems={setListItems}/>
       <NewListItemButton handleButton={handleNewListItemButton} />
       </div>
     </div>
