@@ -27,7 +27,7 @@ const ListItem = ({
 
   const editListItem = async () => {
     const {value} = await Swal.fire({
-      title: "New Item information",
+      title: "Item information",
       html: `<input 
               tipe='text' 
               id='name' 
